@@ -1,0 +1,15 @@
+#!/bin/sh
+
+APP_DIR="$(dirname "$0")/../.."
+LINK_FILE="$APP_DIR/Contents/Resources/Link.txt"
+
+if test -e "$LINK_FILE"; then
+  open -b "com.figma.Desktop" -- $(cat "$LINK_FILE")
+else
+  NEW_APP_DIR="$APP_DIR/../New Figma Shortcut.app"
+  NEW_LINK_FILE="$NEW_APP_DIR/Contents/Resources/Link.txt"
+
+  cp -a -R "$APP_DIR" "$NEW_APP_DIR"
+  pbpaste > "$NEW_LINK_FILE"
+  open -R "$NEW_APP_DIR"
+fi
