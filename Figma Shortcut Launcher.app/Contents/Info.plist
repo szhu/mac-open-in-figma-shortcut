@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<dict>
-		<key>CFBundleExecutable</key>
-		<string>Figma Shortcut.swift</string>
-		<key>CFBundleIconFile</key>
-		<string>Icon</string>
-		<key>CFBundleIdentifier</key>
-		<string>com.interestinglythere.FigmaShortcut</string>
-		<key>CFBundlePackageType</key>
-		<string>APPL</string>
-		<key>CFBundleShortVersionString</key>
-		<string>0.1</string>
-		<key>CFBundleName</key>
-		<string>Test App</string>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>figma.url</string>
-				<string>figmaurl</string>
-				<string>figmaloc</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>Figma shortcut</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleTypeIconFile</key>
-			<string>Icon</string>
-		</dict>
-	</array>
-	</dict>
+  <dict>
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>figma</string>
+          <string>figmaurl</string>
+        </array>
+        <key>CFBundleTypeIconFile</key>
+        <string>Icon</string>
+        <key>CFBundleTypeName</key>
+        <string>Figma shortcut</string>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+      </dict>
+    </array>
+    <key>CFBundleExecutable</key>
+    <string>Figma Shortcut Launcher</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.interestinglythere.FigmaShortcutLauncher</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>Figma Shortcut Launcher</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1</string>
+    <key>LSBackgroundOnly</key>
+    <true />
+  </dict>
 </plist>

@@ -1,0 +1,50 @@
+#!/usr/bin/env swift
+// https://theswiftdev.com/how-to-build-macos-apps-using-only-the-swift-package-manager/
+
+import AppKit
+import SwiftUI
+
+@discardableResult
+func shell(_ args: String...) -> Int32 {
+    let task = Process()
+    task.launchPath = "/usr/bin/env"
+    task.arguments = args
+    task.launch()
+    task.waitUntilExit()
+    return task.terminationStatus
+}
+
+var nFilesOpened = 0
+
+@available(macOS 10.15, *)
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_: Notification) {
+        let appMenu = NSMenuItem()
+        appMenu.submenu = NSMenu()
+        appMenu.submenu?.addItem(NSMenuItem(
+            title: "Quit",
+            action: #selector(NSApplication.terminate(_:)),
+            keyEquivalent: "q"
+        ))
+        let mainMenu = NSMenu()
+        mainMenu.addItem(appMenu)
+        NSApplication.shared.mainMenu = mainMenu
+
+        NSApp.setActivationPolicy(.accessory)
+    }
+
+    func application(_: NSApplication, openFile filename: String) -> Bool {
+        // When the app is launched, it always receives two files to open --
+        // I'm not sure where they're coming from. Just ignore them for now.
+        nFilesOpened += 1
+        if nFilesOpened <= 2 {
+            return true
+        }
+
+        shell("sh", "-c", "open -b com.figma.Desktop \"$(cat \"$1\")\"", "-", filename)
+        return true
+    }
+}
+
+NSApplication.shared.delegate = AppDelegate()
+NSApplication.shared.run()

@@ -1,0 +1,8 @@
+{
+  "[xml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.associations": {
+    "*.plist": "html"
+  }
+}

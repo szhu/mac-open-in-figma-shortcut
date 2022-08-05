@@ -1,0 +1,22 @@
+#!/bin/sh
+
+SHORTCUT_NAME=$(osascript -e '
+  tell app "Finder" to display dialog "Shortcut name:" default answer "New Figma Shortcut" buttons {"OK"} default button "OK"
+  text returned of result
+')
+
+DST_DIR="$(osascript -e '
+  try
+    tell app "Finder" to get POSIX path of ((target of window 1) as string)
+  on error
+    POSIX path of (path to desktop)
+  end
+')"
+SHORTCUT_PATH="$DST_DIR/$SHORTCUT_NAME.figma"
+
+osascript -e '
+  tell app "Finder" to display dialog "Figma URL:" default answer "'"$(pbpaste)"'" buttons {"OK"} default button "OK"
+  text returned of result
+' >"$SHORTCUT_PATH"
+open -R "$SHORTCUT_PATH"
+SetFile -a E "$SHORTCUT_PATH"
