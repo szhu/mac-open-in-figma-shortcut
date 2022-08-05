@@ -11,7 +11,7 @@
           <string>figmaurl</string>
         </array>
         <key>CFBundleTypeIconFile</key>
-        <string>Icon</string>
+        <string>Document</string>
         <key>CFBundleTypeName</key>
         <string>Figma shortcut</string>
         <key>CFBundleTypeRole</key>
@@ -20,6 +20,8 @@
     </array>
     <key>CFBundleExecutable</key>
     <string>Figma Shortcut Launcher</string>
+    <key>CFBundleIconFile</key>
+    <string>App</string>
     <key>CFBundleIdentifier</key>
     <string>com.interestinglythere.FigmaShortcutLauncher</string>
     <key>CFBundleInfoDictionaryVersion</key>
