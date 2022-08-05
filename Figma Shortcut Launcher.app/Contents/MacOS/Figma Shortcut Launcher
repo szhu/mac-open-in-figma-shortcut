@@ -14,11 +14,21 @@ func shell(_ args: String...) -> Int32 {
     return task.terminationStatus
 }
 
+func alert(_ message: String) {
+    NSApplication.shared.activate(ignoringOtherApps: true)
+    let alert = NSAlert()
+    alert.messageText = "Error"
+    alert.informativeText = message
+    alert.addButton(withTitle: "OK")
+    alert.alertStyle = .critical
+    alert.runModal()
+}
+
 var nFilesOpened = 0
 
 @available(macOS 10.15, *)
 class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationDidFinishLaunching(_: Notification) {
+    func applicationWillFinishLaunching(_: Notification) {
         let appMenu = NSMenuItem()
         appMenu.submenu = NSMenu()
         appMenu.submenu?.addItem(NSMenuItem(
@@ -41,10 +51,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
 
-        shell("sh", "-c", "open -b com.figma.Desktop \"$(cat \"$1\")\"", "-", filename)
+        do {
+            let appUrl = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.figma.Desktop")
+            let contents = try String(contentsOfFile: filename, encoding: .utf8)
+            guard let url = URL(string: contents.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+                alert("The shortcut has invalid contents: \(contents)")
+                return false
+            }
+
+            if appUrl == nil {
+                // If the app is not installed, open the URL in a web browser.
+                NSWorkspace.shared.open(url)
+            } else {
+                NSWorkspace.shared.open(
+                    [url],
+                    withApplicationAt: appUrl!,
+                    configuration: NSWorkspace.OpenConfiguration()
+                )
+            }
+        } catch {
+            alert("Error reading the shortcut file.")
+            return false
+        }
+
+        // shell("sh", "-c", "open -b com.figma.Desktop \"$(cat \"$1\")\"", "-", filename)
         return true
     }
 }
 
-NSApplication.shared.delegate = AppDelegate()
+let delegate = AppDelegate()
+NSApplication.shared.delegate = delegate
 NSApplication.shared.run()
